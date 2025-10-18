@@ -3,18 +3,21 @@ from mysql.connector import Error
 
 # --- Configuration ---
 DATABASE_NAME = "alx_book_store"
+
+# The mandatory DDL statement is defined here as a constant string.
+CREATE_DB_QUERY = f"CREATE DATABASE IF NOT EXISTS {DATABASE_NAME}"
+
 # !!! UPDATE these credentials to match your MySQL setup !!!
 DB_CONFIG = {
     "host": "localhost",
     "user": "your_username", 
     "password": "your_password",
-    # We do NOT specify a database here, as we are creating it
 }
 
 def create_database():
     """
-    Connects to the MySQL server and creates the 'alx_book_store' database
-    using the DDL statement: CREATE DATABASE IF NOT EXISTS.
+    Connects to the MySQL server and executes the DDL statement 
+    'CREATE DATABASE IF NOT EXISTS alx_book_store'.
     """
     db_connection = None
     try:
@@ -26,14 +29,12 @@ def create_database():
             cursor = db_connection.cursor()
             print("Successfully connected to MySQL server.")
 
-            # 2. Define the exact DDL statement required
-            create_db_query = f"CREATE DATABASE IF NOT EXISTS {DATABASE_NAME}"
+            # 2. Execute the mandatory DDL statement
+            # The script now explicitly shows the exact required command being executed.
+            print(f"Executing DDL: {CREATE_DB_QUERY}")
+            cursor.execute(CREATE_DB_QUERY)
             
-            # 3. Execute the DDL statement
-            print(f"Executing DDL: {create_db_query}")
-            cursor.execute(create_db_query)
-            
-            # 4. Print the mandatory success message
+            # 3. Print the mandatory success message
             print(f"Database '{DATABASE_NAME}' created successfully!")
             
             cursor.close()
@@ -42,10 +43,10 @@ def create_database():
         # Handle connection and execution errors
         print(f"\n--- DATABASE CONNECTION ERROR ---")
         print(f"Failed to connect or execute command: {err}")
-        print("ACTION REQUIRED: Please verify your database server is running and your 'user' and 'password' in the script are correct.")
+        print("ACTION REQUIRED: Please verify your database server is running and your 'user' and 'password' are correct.")
 
     finally:
-        # 5. Ensure the connection is closed
+        # 4. Ensure the connection is closed
         if db_connection and db_connection.is_connected():
             db_connection.close()
             print("MySQL connection closed.")
