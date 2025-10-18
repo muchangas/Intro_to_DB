@@ -1,5 +1,4 @@
--- Attempting to explicitly force the required string "USE alx_book_store;"
--- by ensuring no other characters/comments interfere.
-USE alx_book_store;
+-- DDL to list all tables in the currently selected database.
+-- The target database 'alx_book_store' will be selected by passing
+-- it as an argument to the MySQL command line client.
 SHOW TABLES;
-
