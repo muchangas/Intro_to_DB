@@ -1,5 +1,3 @@
--- DDL to retrieve the structure of the 'Books' table by querying
--- the INFORMATION_SCHEMA, as DESCRIBE and EXPLAIN are forbidden.
 SELECT
 COLUMN_NAME,
 COLUMN_TYPE,
@@ -14,4 +12,5 @@ TABLE_SCHEMA = 'alx_book_store'
 AND TABLE_NAME = 'Books'
 ORDER BY
 ORDINAL_POSITION;
+
 
