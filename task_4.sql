@@ -1,18 +1,17 @@
--- DDL to print the full description of the table Books
--- The query uses INFORMATION_SCHEMA.COLUMNS to comply with the constraint
--- of not using DESCRIBE or EXPLAIN.
+-- DDL to print the full description of the table Books without using DESCRIBE or EXPLAIN.
 
 SELECT
-COLUMN_NAME, -- Required String
-COLUMN_TYPE, -- Required String
+COLUMN_NAME,
+COLUMN_TYPE,
 IS_NULLABLE,
 COLUMN_KEY,
 COLUMN_DEFAULT,
 EXTRA
 FROM
-INFORMATION_SCHEMA.COLUMNS -- Required String
+INFORMATION_SCHEMA.COLUMNS
 WHERE
-TABLE_SCHEMA = 'alx_book_store' -- Required String
-AND TABLE_NAME = 'Books' -- Required String
+TABLE_SCHEMA = 'alx_book_store'
+AND TABLE_NAME = 'Books'
 ORDER BY
 ORDINAL_POSITION;
+
