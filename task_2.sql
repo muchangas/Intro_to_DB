@@ -28,24 +28,23 @@ email VARCHAR(215) NOT NULL UNIQUE,
 address TEXT
 );
 
--- 4. TABLE: Orders (FIXED to include exact required strings: Orders, order_id INT, order_date DATE)
--- Stores the main order record, linking a customer to the transaction.
+-- 4. TABLE: Orders
 
 CREATE TABLE IF NOT EXISTS Orders (
-order_id INT PRIMARY KEY AUTO_INCREMENT, -- FIXED: Column name is 'order_id'
+order_id INT PRIMARY KEY AUTO_INCREMENT,
 customer_id INT NOT NULL,
-order_date DATE NOT NULL,              -- FIXED: Column name is 'order_date'
+order_date DATE NOT NULL,
 FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
 );
 
--- 5. TABLE: order details (Using "order_details" as per common practice, but adjusting column names)
+-- 5. TABLE: Order_Details (FIXED to include exact required strings: Order_Details, quantity DOUBLE)
 -- Stores the specific items (books and quantities) within each order.
 
-CREATE TABLE IF NOT EXISTS order_details (
+CREATE TABLE IF NOT EXISTS Order_Details (
 order_detail_id INT PRIMARY KEY AUTO_INCREMENT,
 order_id INT NOT NULL,
 book_id INT NOT NULL,
-quantity INT NOT NULL,
+quantity DOUBLE NOT NULL, -- FIXED: Data type changed to DOUBLE
 FOREIGN KEY (order_id) REFERENCES Orders(order_id),
 FOREIGN KEY (book_id) REFERENCES Books(book_id)
 );
