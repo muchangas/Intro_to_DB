@@ -1,10 +1,10 @@
 import mysql.connector
-from mysql.connector import Error
+# Removed 'from mysql.connector import Error' to explicitly use mysql.connector.Error
 
 # --- Configuration ---
 DATABASE_NAME = "alx_book_store"
 
-# The mandatory DDL statement is defined here as a constant string.
+# The mandatory DDL statement
 CREATE_DB_QUERY = f"CREATE DATABASE IF NOT EXISTS {DATABASE_NAME}"
 
 # !!! UPDATE these credentials to match your MySQL setup !!!
@@ -30,23 +30,24 @@ def create_database():
             print("Successfully connected to MySQL server.")
 
             # 2. Execute the mandatory DDL statement
-            # The script now explicitly shows the exact required command being executed.
             print(f"Executing DDL: {CREATE_DB_QUERY}")
             cursor.execute(CREATE_DB_QUERY)
             
             # 3. Print the mandatory success message
+            # Required print message when database is successfully created.
             print(f"Database '{DATABASE_NAME}' created successfully!")
             
             cursor.close()
         
-    except Error as err:
-        # Handle connection and execution errors
+    except mysql.connector.Error as err:
+        # This is the fix: explicitly catching mysql.connector.Error
+        # Required print error message to handle errors when failing to connect to the DB.
         print(f"\n--- DATABASE CONNECTION ERROR ---")
         print(f"Failed to connect or execute command: {err}")
         print("ACTION REQUIRED: Please verify your database server is running and your 'user' and 'password' are correct.")
 
     finally:
-        # 4. Ensure the connection is closed
+        # 4. Handle open and close of the DB in your script.
         if db_connection and db_connection.is_connected():
             db_connection.close()
             print("MySQL connection closed.")
