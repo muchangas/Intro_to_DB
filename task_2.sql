@@ -1,7 +1,7 @@
 -- SELECT THE DATABASE TO WORK WITH
 USE ALX_BOOK_STORE;
 
--- 1. TABLE: Authors (FIXED to include exact required strings: Authors, author_id, author_name)
+-- 1. TABLE: Authors (Corrected Casing)
 -- Stores the names of the book authors.
 
 CREATE TABLE IF NOT EXISTS Authors (
@@ -9,15 +9,14 @@ author_id INT PRIMARY KEY AUTO_INCREMENT,
 author_name VARCHAR(215) NOT NULL
 );
 
--- 2. TABLE: BOOKS
+-- 2. TABLE: Books (FIXED to include exact required strings: Books, title, price)
 -- Stores book details and links each book to its author.
--- NOTE: Foreign key references the corrected Authors table.
 
-CREATE TABLE IF NOT EXISTS BOOKS (
+CREATE TABLE IF NOT EXISTS Books (
 BOOK_ID INT PRIMARY KEY AUTO_INCREMENT,
-TITLE VARCHAR(130) NOT NULL,
+title VARCHAR(130) NOT NULL, -- FIXED: Column name is 'title'
 author_id INT,
-PRICE DECIMAL(10, 2) NOT NULL,
+price DECIMAL(10, 2) NOT NULL, -- FIXED: Column name is 'price'
 PUBLICATION_DATE DATE,
 FOREIGN KEY (author_id) REFERENCES Authors(author_id)
 );
@@ -52,5 +51,6 @@ ORDER_ID INT NOT NULL,
 BOOK_ID INT NOT NULL,
 QUANTITY INT NOT NULL,
 FOREIGN KEY (ORDER_ID) REFERENCES ORDERS(ORDER_ID),
-FOREIGN KEY (BOOK_ID) REFERENCES BOOKS(BOOK_ID)
+FOREIGN KEY (BOOK_ID) REFERENCES Books(BOOK_ID) -- Updated reference
 );
+
