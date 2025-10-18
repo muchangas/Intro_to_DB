@@ -1,51 +1,51 @@
 import mysql.connector
+from mysql.connector import Error
 
-# --- Database and Connection Details ---
+# --- Configuration ---
 DATABASE_NAME = "alx_book_store"
-# NOTE: Replace 'your_username' and 'your_password' with your actual MySQL credentials
+# !!! UPDATE these credentials to match your MySQL setup !!!
 DB_CONFIG = {
     "host": "localhost",
     "user": "your_username", 
     "password": "your_password",
-    # We do NOT specify the database here, as we are trying to create it
+    # We do NOT specify a database here, as we are creating it
 }
 
 def create_database():
     """
-    Connects to the MySQL server and creates the specified database using
-    the CREATE DATABASE IF NOT EXISTS statement.
+    Connects to the MySQL server and creates the 'alx_book_store' database
+    using the DDL statement: CREATE DATABASE IF NOT EXISTS.
     """
     db_connection = None
     try:
-        # 1. Connect to the MySQL server (without specifying the database)
+        # 1. Connect to the MySQL server
         print("Attempting to connect to the MySQL server...")
         db_connection = mysql.connector.connect(**DB_CONFIG)
         
-        # Check if the connection was successful
         if db_connection.is_connected():
             cursor = db_connection.cursor()
-            print("Connection successful.")
+            print("Successfully connected to MySQL server.")
 
-            # 2. DDL: Execute the CREATE DATABASE statement
-            # The 'IF NOT EXISTS' clause prevents the script from failing if the database exists.
+            # 2. Define the exact DDL statement required
             create_db_query = f"CREATE DATABASE IF NOT EXISTS {DATABASE_NAME}"
             
-            print(f"Executing: {create_db_query}")
+            # 3. Execute the DDL statement
+            print(f"Executing DDL: {create_db_query}")
             cursor.execute(create_db_query)
             
-            # Print the success message
-            print(f"Database '{DATABASE_NAME}' created successfully (or already exists)!")
+            # 4. Print the mandatory success message
+            print(f"Database '{DATABASE_NAME}' created successfully!")
             
-            # 3. Close the cursor
             cursor.close()
         
-    except mysql.connector.Error as err:
-        # Handle connection errors (e.g., wrong credentials, server offline)
-        print(f"Error connecting to MySQL: {err}")
-        print("Please check your database connection details (host, user, password) and ensure the MySQL server is running.")
+    except Error as err:
+        # Handle connection and execution errors
+        print(f"\n--- DATABASE CONNECTION ERROR ---")
+        print(f"Failed to connect or execute command: {err}")
+        print("ACTION REQUIRED: Please verify your database server is running and your 'user' and 'password' in the script are correct.")
 
     finally:
-        # 4. Handle open and close of the DB connection
+        # 5. Ensure the connection is closed
         if db_connection and db_connection.is_connected():
             db_connection.close()
             print("MySQL connection closed.")
